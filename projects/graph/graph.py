@@ -43,13 +43,25 @@ class Graph:
                     stack.push(neighbor)
         print(visited)
 
+    def dft_recursive_helper(self, stack, visited):
+        vertex = stack.pop()
+        if vertex not in visited:
+            visited.add(vertex)
+            for next_vertex in self.vertices[vertex]:
+                stack.push(next_vertex)
+
+        if stack.size():
+            self.dft_recursive_helper(stack, visited)
+        else:
+            return
+
     def dft_recursive(self, starting_vertex):
-        """
-        Print each vertex in depth-first order
-        beginning from starting_vertex.
-        This should be done using recursion.
-        """
-        pass  # TODO
+        stack = Stack()
+        visited = set()
+        stack.push(starting_vertex)
+
+        self.dft_recursive_helper(stack, visited)
+        print(visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         stack = Stack()
@@ -61,11 +73,12 @@ class Graph:
                 if current_vertex == destination_vertex:
                     visited.add(current_vertex)
                     break
-                visited.add(current_vertex)
+                if current_vertex < destination_vertex:
+                    visited.add(current_vertex)
                 neighbors = self.getNeighbors(current_vertex)
                 for neighbor in neighbors:
                     stack.push(neighbor)
-        print(visited)
+        return visited
 
     def dfs(self, starting_vertex, destination_vertex):
         q = Queue()
@@ -77,11 +90,12 @@ class Graph:
                 if current_vertex == destination_vertex:
                     visited.add(current_vertex)
                     break
-                visited.add(current_vertex)
+                if current_vertex < destination_vertex:
+                    visited.add(current_vertex)
                 neighbors = self.getNeighbors(current_vertex)
                 for neighbor in neighbors:
                     q.enqueue(neighbor)
-        print(visited)
+        return visited
 
 
 if __name__ == '__main__':
