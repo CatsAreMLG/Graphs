@@ -52,20 +52,36 @@ class Graph:
         pass  # TODO
 
     def bfs(self, starting_vertex, destination_vertex):
-        """
-        Return a list containing the shortest path from
-        starting_vertex to destination_vertex in
-        breath-first order.
-        """
-        pass  # TODO
+        stack = Stack()
+        visited = set()
+        stack.push(starting_vertex)
+        while stack.size():
+            current_vertex = stack.pop()
+            if current_vertex not in visited:
+                if current_vertex == destination_vertex:
+                    visited.add(current_vertex)
+                    break
+                visited.add(current_vertex)
+                neighbors = self.getNeighbors(current_vertex)
+                for neighbor in neighbors:
+                    stack.push(neighbor)
+        print(visited)
 
     def dfs(self, starting_vertex, destination_vertex):
-        """
-        Return a list containing a path from
-        starting_vertex to destination_vertex in
-        depth-first order.
-        """
-        pass  # TODO
+        q = Queue()
+        visited = set()
+        q.enqueue(starting_vertex)
+        while q.size():
+            current_vertex = q.dequeue()
+            if current_vertex not in visited:
+                if current_vertex == destination_vertex:
+                    visited.add(current_vertex)
+                    break
+                visited.add(current_vertex)
+                neighbors = self.getNeighbors(current_vertex)
+                for neighbor in neighbors:
+                    q.enqueue(neighbor)
+        print(visited)
 
 
 if __name__ == '__main__':
